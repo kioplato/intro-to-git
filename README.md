@@ -82,3 +82,24 @@ The people behind the workshop (alphabetical order):
 	* Branch naming.
 	* The various topics: bugfix branches, feature branches.
 	* Merging long lasting feature branching back to master for checking status.
+
+
+### Chapter 3: remotes (45 minutes)
+
+Where we publish our work, cooporate with others.
+1. GitHub as a server (5 minutes).
+	* Creating repos on GitHub.
+	* Cloning a repo locally.
+	* Allows us to work, edit commits, refine them in private.
+2. Working with `git remote` (10 minutes).
+	* Exercise: create a repo on GitHub and add a remote to it in a local repo.
+	* `git remote add <name> <url>`.
+3. Pushing the changes to remote (10 minutes).
+	* Exercise: make a change and push it to remote.
+	* `git push origin master`.
+	* Branch remote tracking.
+4. Pulling changes.
+	* `git pull`.
+5. Pull requesting.
+	* Exercise: clone the example repo and write something trivial, then PR.
+	* Is PRs a GitHub feature?
