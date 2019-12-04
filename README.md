@@ -55,3 +55,30 @@ The people behind the workshop (alphabetical order):
 	* `$ git log --pretty=format:"Commit Hash: %H, Author: %aN, Date: %aD"`
 9. The command `git checkout`, `git reset` (on files) (5 minutes).
 	* New versions use `git restore <file> ..`, `git restore --cached <file> ..`
+
+
+### Chapter 2: branching (45 minutes)
+
+1. The command `git branch` (10 minutes).
+	* The branches and their use (contexts and topics).
+	* The branches point to commits.
+	* Switching between branches `git checkout <branchname>`.
+	* Switching and creating branches `git checkout -b <branchname>`.
+	* Exercise: create a branch and check it out.
+2. The command `git merge` (25 minutes).
+	* Merging the two branches together.
+	* The fast-forward method.
+	* The recursive method.
+	* Solving conflicts.
+	* The various flags for conflict characters.
+	* Merging with `--no-ff`.
+	* Exercise: clone example repo, create a branch, make a change and merge it.
+3. Deleting branches (2 minutes).
+	* After we use a branch we may want to delete it.
+	* `git branch -d <branch-name>` for a branch.
+	* `git branch -D <branch-name>` for branch w/ unmerged changes (upstream or
+	  HEAD).
+4. Workflows, branching and practices (5 minutes).
+	* Branch naming.
+	* The various topics: bugfix branches, feature branches.
+	* Merging long lasting feature branching back to master for checking status.
