@@ -34,7 +34,7 @@ The people behind the workshop (alphabetical order):
 	* `--cached` or `--staged` flag.
 	* `--HEAD` flag.
 5. The command `git status` (5 minutes).
-	* Talk about the -u flag, untracked files.
+	* Talk about the `-u` flag, untracked files.
 	* The `-vv` flag.
 	* Adding them together `git status -uvv`.
 6. The command `git add` (20 minutes).
@@ -42,7 +42,7 @@ The people behind the workshop (alphabetical order):
 	* Add filepath.
 	* Interactive add.
 7. The command `git commit` (7 minutes).
-	* In line message (-m).
+	* In line message (`-m`).
 	* Using editor.
 	* Config git core editor.
 	* Commit signing.
