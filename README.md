@@ -6,8 +6,8 @@ A Git workshop organized by ACM UoA Student Chapter.
 ## Participants
 
 The people behind the workshop (alphabetical order):
-* Κιορπελίδης Πλάτων
-* Μπαζιότης Στέφανος
+* Kiorpelidis Platon
+* Baziotis Stefanos
 
 
 ## Talk layout
