@@ -24,4 +24,108 @@
 
 \input{chapters/titlepage}
 
+\section{Introduction}
+\subsection{Git \& Version Control}
+{\sf -- \emph{The Problem}:}
+Many people’s version-control method of choice is to copy files into another
+directory. We create copies of the project and name them to \emph{project v2},
+\emph{project v3}, etc. This approach is very common because it is so simple,
+but it is also incredibly error prone. It is easy to forget which directory
+you’re in and accidentally write to the wrong file or copy over files you don’t
+mean to -- whenever you have the entire history of the project in a single
+place, you risk losing everything. In addition, it clutters up the workspace and
+gives vertigo to anyone browsing it.
+
+We also want to collaborate with other developers. We could keep the codebase
+under a server but what about server failures. If the server goes down for an
+hour, then during that hour nobody can collaborate at all or save versioned
+changes to anything they're working on. If the hard disk the central database is
+on becomes corrupted, and proper backups haven’t been kept, you lose absolutely
+everything -- the entire history of the project except whatever single snapshots
+people happen to have on their local machines.
+
+{\sf -- \emph{The Solution}:} This is where Distributed Version Control Systems
+step in, like Git. In such systems, clients don’t just check out the latest
+snapshot of the files; rather, they fully mirror the repository, including its
+full history. Thus, if any server dies, and these systems were collaborating via
+that server, any of the client repositories can be copied back up to the server
+to restore it. Every clone is really a full backup of all the data.
+
+\textcolor[RGB]{220,220,220}{\rule{\linewidth}{0.8pt}}
+
+{\sf Version Control:} It's is a system that records changes to a file or a set
+of files over time so that you can recall specific versions later.
+
+{\sf Distributed Version Control System:} Clients fully mirror the remote
+repository, including it's history. Remote repository is stored in a server.
+Full copy of the code is present in all the developers' computers.
+
+Popularity of Git (2010 vs 2019):
+\vspace*{-5pt}
+\begin{itemize}
+\item 2010: 26,485 repositories (11.3\% of total)
+\item 2019: 913,378 repositories (70\% of total)
+\end{itemize}
+
+{\sf Server example:} GitHub. GitHub is the single largest hosting server for
+Git repositories with a web front end. It offers all of the distributed version
+control and source code management (SCM) functionality of Git as well as adding
+its own features. It provides access control (users) and several collaboration
+features such as bug tracking, feature requests, task management, and wikis for
+every project. A large percentage of all Git repositories are hosted on GitHub,
+and many open-source projects use it for Git hosting, issue tracking, code
+review, and other things. So while it’s not a direct part of the Git open source
+project, there’s a good chance that you’ll want or need to interact with GitHub
+at some point while using Git professionally.
+
+\subsection{Concept of Git \& Early days}
+Git follows the unix philosophy. The Unix philosophy emphasizes building simple,
+short, clear, modular, and extensible code that can be easily maintained and
+repurposed by developers other than its creators. The Unix philosophy favors
+composability as opposed to monolithic design.
+
+In it's early days git consisted of simple, atomic executables. Such programs
+weren't enough to be useful on their own, but a combination of those, usually in
+shell scripts, composed more complex functionality like \ilcode{\bf git add}.
+Probably it's the reason, after so many developement cycles, still considered a
+complex and difficult tool.
+
+It was created by Linus Torvalds to help maintain Linux. As more people were
+sending in patches and the current workflow didn't scale, Linus created a new
+VCS as he didn't like existing ones. He named it git -- the stupid content
+tracker or the information manager from hell.
+
+\subsubsection{Meaning of Git}
+\vspace*{-10pt}
+\emph{Copied from the first git commit written by Linus Torvalds.}
+
+"git" can mean anything, depending on your mood.
+\begin{itemize}
+\vspace*{-10pt}
+\item Random three-letter combination that is pronounceable, and not actually
+	used by any common UNIX command. The fact that it is a mispronounciation of
+	"get" may or may not be relevant.
+\vspace*{-3pt}
+\item Stupid. Contemptible and despicable. Simple. Take your pick from the
+	dictionary of slang.
+\vspace*{-3pt}
+\item "global information tracker": you're in a good mood, and it actually
+   works for you. Angels sing, and a light suddenly fills the room.
+\vspace*{-3pt}
+\item "goddamn idiotic truckload of sh*t": when it breaks.
+\vspace*{-10pt}
+\end{itemize}
+
+This is a stupid (but extremely fast) directory content manager. It doesn't do
+a whole lot, but what it does do is track directory contents efficiently.
+
+\subsection{Modern Git}
+Initially git wasn't developed for the novice user. Nowdays it's a lot
+friendlier and easier to get into as it comes with a lot of build-in commands,
+wrappers and complexity abstractions. These commands internally use the old,
+enhanced, but still atomic executables. There are GUIs developed for the GUI
+lovers or non-technical people and it's supported with plugins by various text
+editors and IDEs. These changes and features make for an easier, faster and
+streamlined collaboration between developers, who follow various local and
+online workflows.
 \end{document}
