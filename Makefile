@@ -9,3 +9,4 @@ clean:
 	rm -f $(FILE).pdf
 	rm -f $(FILE).log
 	rm -f $(FILE).aux
+	rm -f $(FILE).out
