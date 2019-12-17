@@ -138,7 +138,7 @@ download the source code and compile it yourself.
 
 {\sf -- Linux (Debian, Ubuntu):} \ilcode{sudo apt-get install git-all}
 
-{\sf -- Max:} Run \ilcode{git -{}-version}. If you don’t have it installed
+{\sf -- Mac:} Run \ilcode{git -{}-version}. If you don’t have it installed
 already, it will prompt you to install.
 
 {\sf -- Windows:} Download from \url{https://git-scm.com/download/win}.
@@ -239,21 +239,21 @@ That command compares what is in your working directory with what is in your
 staging area.
 
 To see what you’ve staged that will go into your next commit, you can use
-\ilcode{git diff --staged}. This command compares your staged changes to your
+\ilcode{git diff -{}-staged}. This command compares your staged changes to your
 last commit.
 
 {\sf -- \emph{Exercise}:} View your changes. Run \ilcode{git diff}. Run
-\ilcode{git diff --cached}. Notice the + and - characters. What do they mean?
+\ilcode{git diff -{}-cached}. Notice the + and - characters. What do they mean?
 +, - describes the added and removed lines respectively.
 
 It’s important to note that \ilcode{git diff} by itself doesn’t show all changes
 made since your last commit -- only changes that are still unstaged. If you’ve
 staged all of your changes, \ilcode{git diff} will give you no output. You will
-need to run \ilcode{git diff} and \ilcode{git diff --staged} to show all changes
+need to run \ilcode{git diff} and \ilcode{git diff -{}-staged} to show all changes
 made since your last commit, staged and unstaged.
 
 \ilcode{git status} can reproduce the above behaviour by running internally and
-formatting the output of \ilcode{git diff} and \ilcode{git diff --staged} with
+formatting the output of \ilcode{git diff} and \ilcode{git diff -{}-staged} with
 the flag \ilcode{git status -v}/\ilcode{-vv}. The \ilcode{-v} flag, in addition
 to the output of \ilcode{git status}, will also show the actual changes that are
 staged to be committed, like \ilcode{git diff -{}-cached}. The \ilcode{-vv}
@@ -304,7 +304,7 @@ Alternatively, you can type your commit message inline with the commit command
 by specifying it after a -m flag, like this:
 
 \hspace*{1cm}
-\ilcode{\$ git commit -m "Story 182: Fix benchmarks for speed}
+\ilcode{\$ git commit -m "Story 182: Fix benchmarks for speed"}
 
 Remember that the commit records the snapshot you set up in your staging area.
 Anything you didn’t stage is still sitting there modified; you can do another
@@ -359,14 +359,14 @@ What if you realize that you don’t want to keep the changes you made to a file
 How can you easily unmodify it -- revert it back to what it looked like when you
 last committed? Luckily, \ilcode{git status} tells you how to do that, too.
 
-{\sf -- \emph{Exercise}:} Run \ilcode{git status}. Run \ilcode{git checkout -{}-
-testfile}. You can see that the changes have been reverted.
+{\sf -- \emph{Exercise}:} Run \ilcode{git status}. Run \ilcode{git checkout
+-{}- testfile}. You can see that the changes have been reverted.
 
-{\sf NOTE:} It’s important to understand that \ilcode{git checkout -{}- <file>}
-is a dangerous command. Any local changes you made to that file are gone -- Git
-just replaced that file with the most recently-committed version. Don’t ever use
-this command unless you absolutely know that you don’t want those unsaved local
-changes.
+{\sf NOTE:} It’s important to understand that \ilcode{git checkout -{}-
+$<$file$>$} is a dangerous command. Any local changes you made to that file are
+gone -- Git just replaced that file with the most recently-committed version.
+Don’t ever use this command unless you absolutely know that you don’t want those
+unsaved local changes.
 
 Know that anything that is committed in Git can almost always be recovered. Even
 commits that were deleted or commits that were overwritten/modified can be
