@@ -547,4 +547,257 @@ $<$branchname$>$}.
 
 {\sf -- \emph{Exercise}:} Delete branch testbranch. Run \ilcode{git branch -d
 testbranch}. Run \ilcode{git branch} and notice the branch no longer exists.
+
+\section{Distributed workflows -- Git \& GitHub}
+In Git, every developer is potentially both a node and a hub; that is, every
+developer can both contribute code to other repositories and maintain a public
+repository on which others can base their work and which they can contribute to.
+This presents a vast range of workflow possibilities for your project and/or
+your team. We'll cover a few common paradigms that take advantage of this
+flexibility.
+
+\subsection{Centralized Workflow}
+
+\begin{center}
+\scalebox{2}{%
+	\includegraphics[width=0.4\textwidth]{centralized_workflow}}
+\end{center}
+
+One central hub, or repository, can accept code, and everyone synchronizes their
+work with it. A number of developers are nodes -- consumers of that hub -- and
+synchronize with that centralized location.
+
+This means that if two developers clone from the hub and both make changes, the
+first developer to push their changes back up can do so with no problems. The
+second developer tries to push their changes, but the server rejects them. They
+are told that they're trying to push non-fast-forward changes and that they
+won't be able to do so until they pull the changes and solve possible merge
+conflicts when pulling the first developer's changes.
+
+To achieve something like that, simply set up a single repository on a server
+(probably GitHub), and give everyone on your team push access; Git won't let
+users overwrite each other.
+
+\subsection{Integration-Manager Workflow}
+Because Git allows you to have multiple remote repositories, it’s possible to
+have a workflow where each developer has write access to their own public
+repository and read access to everyone else’s. This scenario often includes a
+canonical repository that represents the "official" project. To contribute to
+that project, you create your own public clone of the project and push your
+changes to it. Then, you can send a request to the maintainer of the main
+project to pull in your changes.
+
+\begin{center}
+\scalebox{2}{%
+	\includegraphics[width=0.4\textwidth]{integration-manager}}
+\end{center}
+
+This is a very common workflow with hub-based tools like GitHub or GitLab, where
+it’s easy to fork a project and push your changes into your fork for everyone to
+see. One of the main advantages of this approach is that you can continue to
+work, and the maintainer of the main repository can pull in your changes at any
+time. Contributors don’t have to wait for the project to incorporate their
+changes -- each party can work at their own pace.
+
+\subsection{Working with remotes}
+To be able to collaborate on any Git project, you need to know how to manage
+your remote repositories. Remote repositories are versions of your project that
+are hosted on the Internet or network somewhere. Collaborating with others
+involves managing these remote repositories and pushing and pulling data to and
+from them when you need to share work. Managing remote repositories includes
+knowing how to add remote repositories, remove remotes, manage various remote
+branches, and more.
+
+GitHub can serve as a host for remote repositories. It's the single largest host
+for Git repositories, and is the central point of collaboration for millions of
+developers and projects. A large percentage of all Git repositories are hosted
+on GitHub, and many open-source projects use it for Git hosting, issue tracking,
+code review, and other things.
+
+{\sf -- \emph{Exercise}:} Create a repository on your GitHub account. Log in and
+click up right. Click on "New repository". Give it a name and click "Create
+repository". Git helps you get started with your new empty repository.
+
+\subsubsection{Adding remotes}
+We reference remotes by a shortname as it's easier to remember. To add a new
+remote repository as a shortname you can reference easily run \ilcode{git remote
+add $<$shortname$>$ $<$url$>$}.
+
+{\sf -- \emph{Exercise}:} Link the existing project with the new remote on
+GitHub. Run \ilcode{git remote add origin
+https://github.com/$<$yourusername$>$/$<$yourrepo$>$.git}
+
+\subsubsection{Listing remotes}
+To see which remote servers you have configured, you can run the \ilcode{git
+remote} command. It lists the shortnames of each remote you’ve specified. You
+can also specify \ilcode{-v}, which shows you the URLs that Git has stored for
+the shortname to be used when reading and writing to that remote.
+
+{\sf -- \emph{Exercise}:} List the current remotes. Run \ilcode{git remote}. It
+should list the origin remote we previously configured. Run \ilcode{git remote
+-v} to list it's URL as well.
+
+\subsubsection{Pushing to remotes}
+Let's upload our changes. What changes? Changes that are in which branch? master
+branch? In order to upload them we have to upload our branch. The command for
+this is \ilcode{git push $<$remote$>$ $<$branch-shortname$>$}.
+
+{\sf -- \emph{Exercise}:} Upload our master branch to GitHub remote repo. Run
+\ilcode{git push origin testbranch}. Go to the GitHub repo and see how it
+updated and now shows the actual project instead of the "Quick setup".
+
+\subsubsection{Pulling from remotes}
+As other people work on our project and push their changes -- you added them as
+collaborators, so they have write rights -- we want to download them, pull them
+as we call it. However your repo is new and you just started out, so you don't
+have other people pushing changes. So let's collaborate together while we take a
+look at a distributed workflow using GitHub.
+
+\subsection{GitHub}
+GitHub is designed around a particular collaboration workflow, centered on Pull
+Requests. This flow works whether you’re collaborating with a tightly-knit team
+in a single shared repository, or a globally-distributed company or network of
+strangers contributing to a project through dozens of forks. It is centered on
+the Topic Branches we covered in Branching.
+
+Here’s how it generally works:
+\begin{itemize}
+\vspace*{-10pt}
+\item Fork the project
+\vspace*{-5pt}
+\item Create a topic branch from master.
+\vspace*{-5pt}
+\item Make some commits to improve the project.
+\vspace*{-5pt}
+\item Push this branch to your GitHub project.
+\vspace*{-5pt}
+\item Open a Pull Request on GitHub.
+\vspace*{-5pt}
+\item Discuss, and optionally continue committing.
+\vspace*{-5pt}
+\item The project owner merges or closes the Pull Request.
+\vspace*{-5pt}
+\item Sync the updated master back to your fork.
+\vspace*{-5pt}
+\end{itemize}
+
+This is basically an implementation of Integration Manager workflow by GitHub.
+
+\subsubsection{Forking projects}
+When you "fork" a project, GitHub will make a copy of the project that is
+entirely yours; it lives in your namespace, your user, and you can push to it.
+Then you contribute your changes back to the original repository.
+
+{\sf -- \emph{Exercise}:} Open GitHub and fork the example repository at
+\url{https://github.com/otalpster/test-repo.git} by clicking fork at the top
+right. After a few seconds, you’ll be taken to your new project, with your own
+writeable copy of the code under your user.
+
+\subsubsection{Cloning a repository}
+There are typically two ways to obtain a Git repository. We already covered the
+first way with \ilcode{git init}, taking a local directory that is currently not
+under version control, and turn it into a Git repository. The second way is
+downloading an existing Git repository from somewhere else. We can do that with
+\ilcode{git clone $<$url$>$}.
+
+{\sf -- \emph{Exercise}:} Clone the forked repository locally. Run \ilcode{git
+clone https://github.com/$<$yourusername$>$/test-repo.git}.
+
+This creates a directory named test-repo, initializes a \ilcode{.git} directory
+inside it, pulls down all the data for that repository, and checks out a working
+copy of the latest version. If you go into the new test-repo directory that was
+just created, you’ll see the project files in there, ready to be worked on or
+used.
+
+\subsubsection{Pull requests}
+We come up with an awesome new feature for the Linux kernel. We forked and
+cloned our fork locally. We create a topic branch, make and commit the changes
+and push them up to GitHub.
+
+If we go back to our fork on GitHub, we can see that GitHub noticed that we
+pushed a new topic branch up and presents us with a big green button to check
+out our changes and open a Pull Request to the original project.
+
+If we click that green button, we’ll see a screen that asks us to give our Pull
+Request a title and description, as well as a list of the commits in our topic
+branch that are "ahead" of the master branch and will be merged, if the project
+owner accepts. It is almost always worthwhile to put some effort into this,
+since a good description helps the owner of the original project determine what
+you were trying to do, whether your proposed changes are correct, and whether
+accepting the changes would improve the original project.
+
+When you hit the Create pull request button on this screen, the owner of the
+project you forked will get a notification that someone is suggesting a change
+and will link to a page that has all of this information on it.
+
+{\sf -- \emph{Exercise}:} Create a new branch and make a change. Push it to your
+fork and open a Pull Request to the "official" repository. If the project owner
+accepts and merges a Pull Request, other Pull Requests that affect the same code
+section will contain merge conflicts.
+
+{\sf NOTE:} It’s important to note that you can also open a Pull Request between
+two branches in the same repository. If you’re working on a feature with someone
+and you both have write access to the project, you can push a topic branch to
+the repository and open a Pull Request on it to the master branch of that same
+project to initiate the code review and discussion process. No forking
+necessary.
+
+\subsubsection{Iterating on a Pull Request}
+At this point, the project owner can look at the suggested change and merge it,
+reject it or comment on it. Usually this conversation takes place over email, on
+GitHub this happens online.  The project owner can review the unified diff and
+leave a comment by clicking on any of the lines. Once the maintainer makes this
+comment, the person who opened the Pull Request will get a notification. 
+
+Now the contributor can see what they need to do in order to get their change
+accepted. Luckily this is very straightforward. Simply commit to the topic
+branch again and push, which will automatically update the Pull Request.
+
+The other thing you’ll notice is that GitHub checks to see if the Pull Request
+merges cleanly and provides a button to do the merge for you on the server. This
+button only shows up if you have write access to the repository and a trivial
+merge is possible. If you click it GitHub will perform a merge. If there are
+merge conflicts it will prompt you to fix them through the website.
+
+\subsubsection{Sync your fork}
+
+\begin{center}
+\scalebox{2.5}{%
+	\includegraphics[width=0.4\textwidth]{pr-01-fail}}
+\end{center}
+
+You forked a project and you started working on it. As you work other
+contributors/colleagues send their requests to the maintainer to pull in their
+work. Their work gets pulled and your fork on GitHub becomes out of date. On top
+of that your changes probably don't merge cleanly, if you opened a pull request
+on GitHub it will show in red, because of merge conflicts with the updated
+remote. You'll want to update your fork, fix your branch so it merges cleanly
+and the maintainer doesn't have to do extra work merging it theirself.
+
+If you want to make your Pull Request mergeable, you would add the original
+repository as a new remote, pull from it, merge the main branch of that
+repository into your topic branch, fix any issues and finally push it back up to
+the same branch you opened the Pull Request on. Then, to update your fork push
+the main branch to your remote.
+
+{\sf -- \emph{Exercise}:} Sync your fork. Add the "official" repository as a
+remote named "upstream". Run \ilcode{git remote add
+https://github.com/otalpster/test-repo}. Pull the main branch of that remote.
+Run \ilcode{git pull upstream master}. Merge the main branch into your topic
+branch, checkout topic branch and run \ilcode{git merge master}. Fix the
+conflicts that occurred. Make the merge commit. Push back up to the same topic
+branch. Run \ilcode{git push}. Once you do that, the Pull Request will be
+automatically updated and re-checked to see if it merges cleanly.
+
+\textcolor[RGB]{220,220,220}{\rule{\linewidth}{0.8pt}}
+
+\begin{center}
+	\Huge
+	{\sf Thank you!}
+\end{center}
+
+You should feel fairly comfortable contributing to a project in Git as well as
+maintaining your own project or integrating other users' contributions.
+Congratulations on being an effective Git user!
+
 \end{document}
