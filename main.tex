@@ -373,4 +373,178 @@ commits that were deleted or commits that were overwritten/modified can be
 recovered. However, anything you lose that was never committed is likely never
 to be seen again.
 
+\subsection{Branching}
+Branching means you diverge from the main line of development and continue to do
+work without messing with that main line. Sometimes you want to experiment with
+an idea, implement a new feature or fix a bug, in a seperate "container",
+without messing or changing the main line, stable "master" branch, making it
+unstable -- with unfinished, bug-ridden -- work in progress changes. Maybe you
+were working on a new feature and an critical bug needs to be fixed immediately.
+You need to somehow save your work and fix that bug.
+
+\begin{center}
+\scalebox{2}{%
+	\includegraphics[width=0.4\textwidth]{basic-branching-1}}
+\end{center}
+
+A branch is simply a movable pointer to a commit. The default branch name in Git
+is master. As you start making commits, you’re given a master branch that points
+to the last commit you made. Every time you commit, the master branch pointer
+moves forward automatically.
+
+The \"master\" branch in Git is not a special branch. It is exactly like any
+other branch. The only reason nearly every repository has one is that the
+\ilcode{git init} command creates it by default and most people don’t bother to
+change it.
+
+Git encourages workflows that branch and merge often, even multiple times in a
+day. Understanding and mastering this feature gives you a powerful and unique
+tool and can entirely change the way that you develop.
+
+{\sf -- \emph{Exercise}:} List the existing branches. Run \ilcode{git branch}.
+Notice that only master exists.
+
+\subsubsection{Create a branch}
+
+\begin{center}
+\scalebox{2}{%
+	\includegraphics[width=0.4\textwidth]{basic-branching-2}}
+\end{center}
+
+Let's create a new branch. Creating a branch "testbranch" means we create a
+new pointer, named "testbranch" for us to move around.
+
+{\sf -- \emph{Exercise}:} Create a new branch. Run \ilcode{git branch
+testbranch}. This creates a new pointer to the same commit you’re currently on.
+\ilcode{git branch} only created a new branch -- it didn’t switch to that
+branch. Run \ilcode{git branch} again. Notice the new branch and the branch you
+are on which is indicated by the asterisk.
+
+{\sf -- \emph{Exercise}:} Where are the branch pointers pointing? Run
+\ilcode{git log}. You can see the "master" and "testing" branches that are right
+there next to the last commit.
+
+\subsubsection{Working on branches and diverging history}
+
+Let's switch to our new branch and make a change. To switch to an existing
+branch, you run the \ilcode{git checkout} command.
+
+{\sf -- \emph{Exercise}:} Switch to the new branch. Run \ilcode{git checkout
+testbranch}. Run \ilcode{git branch}. Notice the asterisk is next to testbranch
+now.
+
+{\sf -- \emph{Exercise}:} Open the testfile file and make a tiny change. Run
+\ilcode{git status} and verify the file indeed changed. You may want to see the
+actual changes in which case run \ilcode{git diff}. Stage the changes with
+\ilcode{git add} and commit them with \ilcode{git commit -m "Tiny change"}. You
+can pick any commit message you think is correct. Run \ilcode{git log} and
+notice that testbranch moved forward and master did not.
+
+Let's change to master branch and also make a change there.
+
+{\sf -- \emph{Exercise}:} Change back to master branch. Run \ilcode{git checkout
+master}.
+
+Notice the files in your working directory reverted back to the snapshot that
+master branch points to. If Git cannot do it cleanly (you have uncommitted
+changes that conflict), it will not let you switch at all. This also means the
+changes you make from this point forward will diverge from an older version of
+the project. It essentially rewinds the work you've done in your testbranch
+branch so you can go in a different direction.
+
+{\sf -- \emph{Exercise}:} Change testfile file. Run \ilcode{git add} and
+\ilcode{git commit -m}.
+
+Now your project history has diverged. You created and switched to a branch, did
+some work on it, and then switched back to master branch and did other work.
+Both of those changes are isolated in separate branches. You can switch back and
+forth between the branches.
+
+{\sf -- \emph{Exercise}:} We can easily see the diverged history with
+\ilcode{git log}. Run \ilcode{git log -{}-oneline -{}-graph -{}-all}.
+
+\begin{center}
+\scalebox{2.5}{%
+	\includegraphics[width=0.4\textwidth]{basic-branching-6}}
+\end{center}
+
+\subsubsection{Merging branches}
+You finished a piece of work, tested it and you want to merge/unify it back into
+the main line of development. You can do that using \ilcode{git merge}. Let's do
+it.
+
+{\sf -- \emph{Exercise}:} Switch to the branch you want to merge your feature
+in. In our example we are already in master branch and we want to merge
+testbranch. Run \ilcode{git merge testbranch}.
+
+Git has various algorithms/strategies to merge branches together. \ilcode{git
+merge} will automatically select a merge strategy unless explicitly specified.
+There are explicit and implicit merges. We will cover fast-forward and recursive
+methods. Fast-forward is an implicit merge. We can perform a fast-forward merge
+if the branch we are merging into has not diverged. In such case Git simplifies
+things by moving the pointer forward because there is no divergent work to merge
+together. Recursive merge on the other hand is an explicit merge. The explicit
+part is that they create a new \"merge\" commit. Recursive is the default merge
+strategy when merging one branch. Git will attempt to find a common ancestor
+between the two branches. Once git finds a common ancestor it will create a new
+\"merge commit\" that combines the changes of the two branches. Technically, a
+merge commit is a regular commit which just happens to have two parent commits.
+
+In this case, your development history has diverged from some older point.
+Because the commit on the branch you’re on isn’t a direct ancestor of the branch
+you’re merging in, Git has to do some work as it cannot fast-forward.
+
+Occasionally, this process doesn’t go smoothly. If you changed the same part of
+the same file differently in the two branches you’re merging, Git won’t be able
+to merge them cleanly. If your change in branch master modified the same part of
+a file as the testbranch branch, you’ll get a merge conflict. In other cases, If
+you didn't change the same part of the file or the branch you are merging into
+does not have any changes after you branched out, it will merge cleanly.
+
+\begin{center}
+\scalebox{2.5}{%
+	\includegraphics[width=0.4\textwidth]{basic-merging-1}}
+\end{center}
+
+Anything that has merge conflicts and hasn’t been resolved is listed as
+unmerged. Git adds standard conflict-resolution markers to the files that have
+conflicts, so you can open them manually and resolve those conflicts. Merge
+conflicts appear with a block that contains \ilcode{$<<<<<<<$}, \ilcode{=======}
+and \ilcode{$>>>>>>>$}. The top part of that block, everything above
+\ilcode{=======}, is the branch you are merging into and everything bellow is
+the branch you are merging in. In order to resolve the conflict, you have to
+either choose one side or the other or merge the contents yourself. After you’ve
+resolved each of these sections in each conflicted file, run \ilcode{git add} on
+each file to mark it as resolved. Staging the file marks it as resolved in Git.
+
+At this point, after running \ilcode{git merge} you should have a merge
+conflict. Changes from the testbranch conflict with changes from master branch.
+Git hasn’t automatically created a new merge commit. It has paused the process
+while you resolve the conflict. If you want to see which files are unmerged at
+any point after a merge conflict, you can run \ilcode{git status}.
+
+{\sf -- \emph{Exercise}:} Open testfile file and resolve the conflict. Notice
+the conflict block with the markers. Solve the conflict and stage the file.
+Create the merge commit with \ilcode{git commit}.
+
+If you think it would be helpful to others looking at this merge in the future,
+you can modify this commit message with details about how you resolved the merge
+and explain why you did the changes you made if these are not obvious.
+
+\begin{center}
+\scalebox{2.5}{%
+	\includegraphics[width=0.4\textwidth]{basic-merging-2}}
+\end{center}
+
+\subsubsection{Deleting branches}
+After you implement or fix a bug you no have no further need for the branch. You
+can delete it with \ilcode{git branch -d $<$branchname$>$}. This command deletes
+branches that have been merged into the branch you are currently in. If the
+branch you are trying to delete contains work that isn't merged in yet, trying
+to delete it will fail. If you really want to delete such branch and lose that
+work, you can force it with \ilcode{-D} flag, \ilcode{git branch -D
+$<$branchname$>$}.
+
+{\sf -- \emph{Exercise}:} Delete branch testbranch. Run \ilcode{git branch -d
+testbranch}. Run \ilcode{git branch} and notice the branch no longer exists.
 \end{document}
